@@ -1,0 +1,15 @@
+{
+  "name": "cleanpaste",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Google Docs editor add-on that cleans up pasted text without losing formatting",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test test/clean.test.js",
+    "push": "node tools/push.mjs",
+    "push:dev": "node tools/push.mjs --dev",
+    "release": "node tools/push.mjs --version",
+    "snapshot": "node tools/snapshot.mjs"
+  }
+}

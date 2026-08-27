@@ -1,0 +1,10 @@
+node_modules/
+
+# Pins a personal Apps Script project id; copy .clasp.json.example instead.
+.clasp.json
+
+# clasp OAuth credentials. These must never reach the repository.
+.clasprc.json
+*.log
+.last-version
+.snapshots/

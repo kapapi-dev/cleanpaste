@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!--
+      Google's own add-on stylesheet. Using it rather than a hand-rolled theme is
+      what makes the panel look like part of Docs instead of like a web page
+      someone embedded in it, and it is what the Editor add-on style guide asks for.
+    -->
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <style>
+      body { font-size: 13px; color: #222; }
+      .intro { color: #666; margin: 0 0 16px; line-height: 1.45; }
+      .option { display: block; margin-bottom: 11px; }
+      .option input { margin: 2px 8px 0 0; float: left; }
+      .option .label { display: block; overflow: hidden; }
+      .option .name { display: block; }
+      .option .hint { display: block; color: #777; font-size: 11px; line-height: 1.35; }
+      .buttons { margin: 18px 0 0; }
+      .buttons button { width: 100%; margin: 0 0 8px; }
+      .status { margin: 14px 0 0; line-height: 1.45; min-height: 1em; }
+      .status.working { color: #777; }
+      .status.problem { color: #b31412; }
+      .status ul { margin: 4px 0 0; padding-left: 18px; }
+      .status li { margin: 1px 0; }
+      .undo { color: #777; font-size: 11px; margin-top: 8px; }
+      .footer {
+        margin-top: 22px; padding-top: 12px;
+        border-top: 1px solid #e0e0e0;
+        color: #777; font-size: 11px; line-height: 1.45;
+      }
+    </style>
+  </head>
+
+  <body>
+    <p class="intro">Tidies up text pasted from PDFs, web pages and AI tools.</p>
+
+    <div id="options">
+      <label class="option">
+        <input type="checkbox" id="spacing" checked>
+        <span class="label">
+          <span class="name">Spacing</span>
+          <span class="hint">Repeated spaces, stray tabs, indents and trailing spaces</span>
+        </span>
+      </label>
+
+      <label class="option">
+        <input type="checkbox" id="blankLines" checked>
+        <span class="label">
+          <span class="name">Extra blank lines</span>
+          <span class="hint">Collapses runs of empty lines; keeps single ones</span>
+        </span>
+      </label>
+
+      <label class="option">
+        <input type="checkbox" id="hidden" checked>
+        <span class="label">
+          <span class="name">Hidden characters</span>
+          <span class="hint">Zero-width spaces and invisible control characters</span>
+        </span>
+      </label>
+
+      <label class="option">
+        <input type="checkbox" id="lineBreaks" checked>
+        <span class="label">
+          <span class="name">Broken line breaks</span>
+          <span class="hint">Rejoins lines cut mid-sentence, keeping real paragraphs</span>
+        </span>
+      </label>
+
+      <label class="option">
+        <input type="checkbox" id="links">
+        <span class="label">
+          <span class="name">Remove links</span>
+          <span class="hint">Keeps the text, clears the link, its colour and underline</span>
+        </span>
+      </label>
+    </div>
+
+    <div class="buttons">
+      <button class="action" id="clean-selection">Clean selection</button>
+      <button id="clean-document">Clean document</button>
+    </div>
+
+    <div class="status" id="status"></div>
+
+    <p class="footer">
+      Nothing you clean leaves this document. CleanPaste makes no network requests
+      and can only see the document it is open in.
+    </p>
+
+    <script>
+      var OPTIONS = ['spacing', 'blankLines', 'hidden', 'lineBreaks', 'links'];
+      var STORE = 'cleanpaste.options';
+
+      // Deliberately not called `status`. A top-level `var status` in a browser
+      // assigns to window.status, which is a legacy DOMString property: the element
+      // is coerced to the string "[object HTMLDivElement]", every later write to
+      // .innerHTML silently does nothing, and nothing throws. The panel looked
+      // completely healthy while showing no messages at all.
+      var statusBox = document.getElementById('status');
+      var buttons = [
+        document.getElementById('clean-selection'),
+        document.getElementById('clean-document')
+      ];
+
+      /**
+       * Choices live in this panel's own browser storage, never on a server and
+       * never in the document. It is a convenience, so every path here tolerates
+       * it being unavailable or empty and falls back to the defaults on screen.
+       */
+      function restore() {
+        try {
+          var saved = JSON.parse(window.localStorage.getItem(STORE));
+          if (!saved) return;
+          OPTIONS.forEach(function (name) {
+            if (typeof saved[name] === 'boolean') {
+              document.getElementById(name).checked = saved[name];
+            }
+          });
+        } catch (err) { /* first run, private window, or storage blocked */ }
+      }
+
+      function remember() {
+        try {
+          window.localStorage.setItem(STORE, JSON.stringify(read()));
+        } catch (err) { /* nothing here is worth failing a clean over */ }
+      }
+
+      function read() {
+        var options = {};
+        OPTIONS.forEach(function (name) {
+          options[name] = document.getElementById(name).checked;
+        });
+        return options;
+      }
+
+      function setBusy(busy) {
+        buttons.forEach(function (button) { button.disabled = busy; });
+      }
+
+      function say(html, className) {
+        statusBox.className = 'status' + (className ? ' ' + className : '');
+        statusBox.innerHTML = html;
+      }
+
+      function escapeHtml(text) {
+        return String(text).replace(/[&<>]/g, function (ch) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[ch];
+        });
+      }
+
+      function plural(count, one, many) {
+        return count + ' ' + (count === 1 ? one : many);
+      }
+
+      function summarise(stats) {
+        var lines = [];
+        if (stats.charactersRemoved > 0) {
+          lines.push('Removed ' + plural(stats.charactersRemoved, 'character', 'characters'));
+        }
+        if (stats.linesJoined > 0) {
+          lines.push('Rejoined ' + plural(stats.linesJoined, 'broken line', 'broken lines'));
+        }
+        if (stats.blankLinesRemoved > 0) {
+          lines.push('Removed ' + plural(stats.blankLinesRemoved, 'blank line', 'blank lines'));
+        }
+        if (stats.linksRemoved > 0) {
+          lines.push('Removed ' + plural(stats.linksRemoved, 'link', 'links'));
+        }
+        return lines;
+      }
+
+      function onDone(result) {
+        setBusy(false);
+
+        if (!result.ok) {
+          say('<strong>' + escapeHtml(result.message.title) + '</strong><br>' +
+              escapeHtml(result.message.body).replace(/\n\n/g, '<br><br>'), 'problem');
+          return;
+        }
+
+        if (!result.changed) {
+          say('Nothing to clean here.');
+          return;
+        }
+
+        var lines = summarise(result.stats).map(function (line) {
+          return '<li>' + escapeHtml(line) + '</li>';
+        });
+
+        say('<strong>Done.</strong><ul>' + lines.join('') + '</ul>' +
+            '<p class="undo">Press Ctrl+Z (Cmd+Z on Mac) to undo.</p>');
+      }
+
+      function onFail(error) {
+        setBusy(false);
+        say('<strong>Clean failed</strong><br>' + escapeHtml(error && error.message ? error.message : error),
+            'problem');
+      }
+
+      function run(scope) {
+        remember();
+        setBusy(true);
+        say('Cleaning…', 'working');
+        google.script.run.withSuccessHandler(onDone).withFailureHandler(onFail)
+          .runCleanup(scope, read());
+      }
+
+      document.getElementById('clean-selection')
+        .addEventListener('click', function () { run('selection'); });
+      document.getElementById('clean-document')
+        .addEventListener('click', function () { run('document'); });
+      OPTIONS.forEach(function (name) {
+        document.getElementById(name).addEventListener('change', remember);
+      });
+
+      restore();
+    </script>
+  </body>
+</html>
