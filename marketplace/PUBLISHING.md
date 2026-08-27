@@ -15,7 +15,11 @@ submitted for review and the app is not public.**
 | Site repository | [`maxtop9843-byte/cleanpaste-site`](https://github.com/maxtop9843-byte/cleanpaste-site) (public) |
 | Public site | <https://maxtop9843-byte.github.io/cleanpaste-site/> |
 | Developer / support email | `maxtop9843@gmail.com` |
-| Google Cloud project | **not yet created** — see below |
+| Google Cloud project name | `CleanPaste` |
+| Google Cloud project ID | `cleanpaste` |
+| **Google Cloud project number** | **`489581033445`** |
+| Marketplace app ID | `489581033445` |
+| Billing account | **none attached** — nothing here can incur a charge |
 
 ---
 
@@ -86,23 +90,17 @@ Google-owned Cloud project, so the Cloud Resource Manager API refuses calls made
 it (`403 PERMISSION_DENIED`). Project creation and console configuration have to be
 done through the console UI.
 
-### 1. Create the Cloud project — **not started**
+### 1. Create the Cloud project — **done**
 
-A Marketplace app needs its own standard Cloud project. Free tier; **do not attach a
-billing account** — nothing here needs one and nothing should be able to incur a charge.
+`CleanPaste` / `cleanpaste`, project number `489581033445`. Free tier, **no billing
+account attached**, so nothing here can incur a charge.
 
-Suggested name / id: `CleanPaste` / `cleanpaste`.
+### 2. Enable the Google Workspace Marketplace SDK — **done**
 
-### 2. Link Apps Script to it — **not started**
+`appsmarket-component.googleapis.com` is enabled on the project, and the SDK's App
+Configuration page loads and reports the Marketplace app ID `489581033445`.
 
-Apps Script → Project Settings → Google Cloud Platform project → Change project →
-enter the project **number**.
-
-> This step is effectively one-way. Do it deliberately, and re-verify the add-on still
-> runs afterwards — on the previous project the migration was re-tested before being
-> trusted.
-
-### 3. OAuth consent screen — **not started**
+### 3. OAuth consent screen — **filled in, blocked on one checkbox**
 
 | Field | Value |
 |---|---|
@@ -124,14 +122,12 @@ access_denied` to every account including the developer's own.
 > `userinfo.profile` come back after saving no matter how often they are deleted;
 > they are platform-mandated. `PRIVACY.md` and the listing already say so.
 
-### 4. Enable the Google Workspace Marketplace SDK — **not started**
-
-### 5. App Configuration — **not started**
+### 4. App Configuration — **blocked**
 
 Docs add-on enabled; script ID and script **version 1**; developer name, website and
 email. A postal address becomes mandatory if trader status is declared.
 
-### 6. Store Listing — **not started**
+### 5. Store Listing — **blocked**
 
 Copy is ready in `LISTING.md`. Upload the icons, the card banner and the screenshot.
 
@@ -139,13 +135,13 @@ Copy is ready in `LISTING.md`. Upload the icons, the card banner and the screens
 > `mailto:` and must be `http(s)`; the post-install tip is required; and region is a
 > checkbox above the country list, not an entry inside it.
 
-### 7. OAuth verification — **not started**
+### 6. OAuth verification — **not started**
 
 Record a demo video, set publishing status to In production, submit the scope
 justification. Brand verification must pass before data-access verification can even
 be requested.
 
-### 8. Publish — **deliberately not done**
+### 7. Publish — **deliberately not done**
 
 Marketplace SDK → Store Listing → **Publish** is the button that makes CleanPaste
 available to the public and starts Google's app review. It has not been pressed, and
