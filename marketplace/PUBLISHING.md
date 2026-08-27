@@ -82,83 +82,134 @@ and clicking verify.
 
 ---
 
-## What remains, in order
+## Configured and saved
 
-Everything below happens in the Google Cloud console and the Marketplace SDK. It could
-not be automated: the Apps Script API token available here belongs to clasp's own
-Google-owned Cloud project, so the Cloud Resource Manager API refuses calls made with
-it (`403 PERMISSION_DENIED`). Project creation and console configuration have to be
-done through the console UI.
+Everything below was done through the Google Cloud console and verified to survive a
+page reload. It could not be automated: the Apps Script API token available here
+belongs to clasp's own Google-owned Cloud project, so Cloud Resource Manager refuses
+calls made with it (`403 PERMISSION_DENIED`).
 
-### 1. Create the Cloud project — **done**
+### 1. Cloud project — **done**
 
 `CleanPaste` / `cleanpaste`, project number `489581033445`. Free tier, **no billing
 account attached**, so nothing here can incur a charge.
 
-### 2. Enable the Google Workspace Marketplace SDK — **done**
+### 2. Google Workspace Marketplace SDK — **enabled**
 
-`appsmarket-component.googleapis.com` is enabled on the project, and the SDK's App
-Configuration page loads and reports the Marketplace app ID `489581033445`.
-
-### 3. OAuth consent screen — **filled in, blocked on one checkbox**
+### 3. OAuth consent screen — **configured and saved**
 
 | Field | Value |
 |---|---|
 | App name | `CleanPaste` |
-| User support email | `maxtop9843@gmail.com` |
-| App logo | `assets/icon-120.png` |
+| User support email / contact | `maxtop9843@gmail.com` |
+| App logo | `assets/icon-120.png`, uploaded, preview confirmed |
 | Application home page | <https://maxtop9843-byte.github.io/cleanpaste-site/> |
 | Privacy policy | <https://maxtop9843-byte.github.io/cleanpaste-site/privacy.html> |
 | Terms of service | <https://maxtop9843-byte.github.io/cleanpaste-site/terms.html> |
 | Authorised domain | `maxtop9843-byte.github.io` |
-| Audience | External |
+| Audience | External, **Testing** |
+| Test user | `maxtop9843@gmail.com` (1 of 100) |
 
-Then register the two scopes under **Data Access**, and add `maxtop9843@gmail.com` as
-a test user. Without a test user, an External + Testing app returns `403
-access_denied` to every account including the developer's own.
+Scopes registered under Data Access and saved. Google classified them exactly as
+predicted:
 
-> Two traps seen before: the scope picker's **Update** button only stages a change —
-> the page's own **Save** at the bottom commits it. And `userinfo.email` /
-> `userinfo.profile` come back after saving no matter how often they are deleted;
-> they are platform-mandated. `PRIVACY.md` and the listing already say so.
+| Scope | Google's classification |
+|---|---|
+| `documents.currentonly` | non-sensitive |
+| `script.container.ui` | **sensitive** |
+| restricted scopes | **none** |
 
-### 4. App Configuration — **blocked**
+> The scope picker's **Update** button only stages the change; the page's own **Save**
+> at the bottom commits it. Verified by reloading.
 
-Docs add-on enabled; script ID and script **version 1**; developer name, website and
-email. A postal address becomes mandatory if trader status is declared.
+### 4. Apps Script linked to the Cloud project — **done, and re-verified**
 
-### 5. Store Listing — **blocked**
+Project Settings now reads GCP **표준 (Standard)**, project number `489581033445`.
+This was the one-way step.
 
-Copy is ready in `LISTING.md`. Upload the icons, the card banner and the screenshot.
+It revokes every existing authorisation, so the add-on was re-authorised and re-tested
+afterwards rather than assumed to still work. The consent screen now shows the
+CleanPaste name and logo and asks for exactly the two documented permissions. A full
+Clean document run afterwards produced a result byte-identical to the pre-migration
+run, apart from Google's internally generated list id, which is regenerated every time
+the fixture is rebuilt and is not something the add-on controls.
 
-> Validation rules the form only reveals on save: the report-issue URL rejects
-> `mailto:` and must be `http(s)`; the post-install tip is required; and region is a
-> checkbox above the country list, not an entry inside it.
+### 5. App Configuration — **saved**
 
-### 6. OAuth verification — **not started**
+| Field | Value |
+|---|---|
+| App visibility | 공개 (Public) — **locked after saving** |
+| Installation | Individual + admin |
+| Docs add-on | enabled |
+| Script ID | `13Q2UCcV7bv9rvSZNrU0fi7IdggfsUfp5eudRls0T_0NPuDcTCnHlr-WL` |
+| Script version | `1` |
+| OAuth scopes shown | `documents.currentonly`, `script.container.ui`, plus `userinfo.email` and `userinfo.profile` added by Google |
+| Developer name | `CleanPaste` |
+| Developer website / app website | the public site |
+| Developer email | `maxtop9843@gmail.com` |
+| Trader status | **비사업자 (non-trader)** — see the warning below |
 
-Record a demo video, set publishing status to In production, submit the scope
-justification. Brand verification must pass before data-access verification can even
-be requested.
+> **Trader status needs a decision before publishing.** It is set to 비사업자 only
+> because declaring 사업자 makes a public postal address mandatory, and entering a
+> personal address into a web form is not something this automation will do. The
+> sibling project SortDoc was declared **사업자** with a published address, so the two
+> listings currently disagree. Nothing is public until Publish is pressed, and the
+> field stays editable until then — but it must be set deliberately, and to whatever
+> is actually true.
 
-### 7. Publish — **deliberately not done**
+### 6. Store Listing — **draft saved**, verified against a reload
 
-Marketplace SDK → Store Listing → **Publish** is the button that makes CleanPaste
-available to the public and starts Google's app review. It has not been pressed, and
-should not be until the owner has decided to.
+| Field | Value |
+|---|---|
+| Language | English |
+| Application name | `CleanPaste` |
+| Short description | 189 characters (limit 200) |
+| Detailed description | 3,571 characters (limit 16,000) |
+| Pricing | 무료 (Free) |
+| Category | 생산성 도구 (Productivity) |
+| Regions | 모든 리전 (all) |
+| Icons 32 / 48 / 96 / 128, card banner, screenshot | uploaded, all stored as `lh3.googleusercontent.com` URLs |
+| Terms / Privacy / Support / Help / Report issue | all set |
+| Post-install tip | set |
 
----
+Three traps this form sets, all of which cost a full round of work here:
+
+- **The language row has its own 완료 (Done) button.** Filling the name and the two
+  descriptions is not enough — until 완료 is pressed the language entry is never
+  committed, and the whole draft silently fails to save with no error message.
+- **초안 저장 validates every required field.** A partially filled draft does not save
+  and does not say so; the only way to tell is to reload and find the form empty.
+- **Setting an input's value from JavaScript does not register.** Angular's form model
+  only sees real keystrokes, so the fields have to be typed into. Values set
+  programmatically look correct on screen and are discarded on save.
+
+### 7. OAuth verification — **not started**
+
+Needs a demo video, publishing status moved to In production, and the scope
+justification submitted. Brand verification must pass before data-access verification
+can be requested. The justification text is drafted in `LISTING.md`.
+
+### 8. Publish — **deliberately not done**
+
+Marketplace SDK → Store Listing → **제출하여 검토받기** is the button that makes
+CleanPaste public and starts Google's app review. It has not been pressed.
+
+It should not be pressed yet, for two reasons that have nothing to do with permission:
+the OAuth verification materials (demo video) do not exist, and trader status is not
+yet a deliberate decision. Publishing before those are settled spends a review cycle
+on a listing that is not ready.
 
 ## Steps only the account owner can take
 
 These are not automation gaps; they are declarations and consents that must be made by
 the person responsible for the app.
 
-- Accepting the **Google API Services User Data Policy**
-- Declaring **trader status** (and, if trader, publishing a postal address — EEA
-  consumer law requires it)
+- ~~Accepting the **Google API Services User Data Policy**~~ — done, on the account
+  owner's explicit instruction to handle consent checkboxes on their behalf
+- Declaring **trader status**, and publishing a postal address if the answer is 사업자.
+  Currently set to 비사업자 as a placeholder; see section 5
 - Any identity verification Google asks for
-- Pressing **Publish** / **Submit for review**
+- Pressing **제출하여 검토받기** (Submit for review)
 
 ---
 
@@ -167,7 +218,8 @@ the person responsible for the app.
 **Consistency — these must not drift apart**
 
 - [x] Manifest scopes are exactly `documents.currentonly` and `script.container.ui`
-- [ ] Manifest scopes == scopes declared under Data Access
+- [x] Manifest scopes == scopes declared under Data Access, and Google classified
+      them as expected (currentonly non-sensitive, container.ui sensitive, no restricted)
 - [x] `PRIVACY.md` and `privacy.html` describe exactly those two scopes, and say
       plainly that Google attaches the identity scopes to any listing
 - [x] "Free" pricing matches the code, which contains no licensing logic
