@@ -147,15 +147,12 @@ the fixture is rebuilt and is not something the add-on controls.
 | Developer name | `CleanPaste` |
 | Developer website / app website | the public site |
 | Developer email | `maxtop9843@gmail.com` |
-| Trader status | **비사업자 (non-trader)** — see the warning below |
+| Trader status | **사업자 (trader)** — matching SortDoc |
+| Developer postal address | `107-1702, 57, Seonhwa-ro, Jung-gu, Daejeon 34853, Republic of Korea` — same as SortDoc |
 
-> **Trader status needs a decision before publishing.** It is set to 비사업자 only
-> because declaring 사업자 makes a public postal address mandatory, and entering a
-> personal address into a web form is not something this automation will do. The
-> sibling project SortDoc was declared **사업자** with a published address, so the two
-> listings currently disagree. Nothing is public until Publish is pressed, and the
-> field stays editable until then — but it must be set deliberately, and to whatever
-> is actually true.
+> Declaring 사업자 is what makes the postal address mandatory: EEA consumer law
+> requires a trader to publish one. Both values are deliberately identical to SortDoc
+> so the two listings do not contradict each other on the same account.
 
 ### 6. Store Listing — **draft saved**, verified against a reload
 
@@ -189,15 +186,47 @@ Needs a demo video, publishing status moved to In production, and the scope
 justification submitted. Brand verification must pass before data-access verification
 can be requested. The justification text is drafted in `LISTING.md`.
 
-### 8. Publish — **deliberately not done**
+### 8. Publish — **deliberately not done, and blocked on two things**
 
 Marketplace SDK → Store Listing → **제출하여 검토받기** is the button that makes
 CleanPaste public and starts Google's app review. It has not been pressed.
 
-It should not be pressed yet, for two reasons that have nothing to do with permission:
-the OAuth verification materials (demo video) do not exist, and trader status is not
-yet a deliberate decision. Publishing before those are settled spends a review cycle
-on a listing that is not ready.
+It is waiting on two decisions that belong to the owner and are in progress:
+
+1. **A developer brand.** SortDoc and CleanPaste are currently their own publishers —
+   the Marketplace "developer name" reads `SortDoc` on one listing and `CleanPaste` on
+   the other. The plan is one developer brand with both apps under it. Until that
+   brand exists, publishing would ship the wrong publisher name.
+2. **A domain.** The listings currently point at `maxtop9843-byte.github.io`, a
+   GitHub Pages path. A purchased domain is coming, and OAuth brand verification
+   checks the home page URL, so it is better to verify the real domain once than to
+   verify the github.io path and redo it.
+
+---
+
+## Waiting on: the brand and the domain
+
+When the brand name is decided, change **on both CleanPaste and SortDoc**:
+
+- Marketplace SDK → App Configuration → **개발자 이름** → the brand name
+  (this is the publisher name shown on the Marketplace listing)
+- Google Auth Platform → Branding → **App name** stays the product name
+  (`CleanPaste`), not the brand — it is what users see on the consent screen
+
+When the domain is bought, change:
+
+| Where | Field |
+|---|---|
+| Site repo | `CNAME` file, GitHub Pages custom domain, HTTPS enforced |
+| Search Console | verify the new domain, and the exact listing prefix, in its own right |
+| Auth Platform → Branding | home page, privacy policy, terms, **authorised domain** |
+| SDK → App Configuration | 개발자 웹사이트 URL, 애플리케이션 웹사이트 URL |
+| SDK → Store Listing | terms, privacy, support, help, report-issue URLs |
+| This repo | `README.md`, `PRIVACY.md`, `LISTING.md`, `site/*.html` links |
+
+Order matters: domain first, then Search Console verification, then brand
+verification, then the sensitive-scope submission. Brand verification has previously
+rejected verification inherited from a parent property, so verify the exact prefix.
 
 ## Steps only the account owner can take
 
@@ -206,8 +235,9 @@ the person responsible for the app.
 
 - ~~Accepting the **Google API Services User Data Policy**~~ — done, on the account
   owner's explicit instruction to handle consent checkboxes on their behalf
-- Declaring **trader status**, and publishing a postal address if the answer is 사업자.
-  Currently set to 비사업자 as a placeholder; see section 5
+- ~~Declaring **trader status** and the postal address~~ — done, set to 사업자 with
+  the same address as SortDoc, on the owner's instruction
+- Choosing the **developer brand name** and buying the **domain**
 - Any identity verification Google asks for
 - Pressing **제출하여 검토받기** (Submit for review)
 
