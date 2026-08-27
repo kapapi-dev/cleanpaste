@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="Kl6CbJL6BW1CWxwzkLTF0IZ0xn-TaQw5YbypSIFiyAw" />
+<title>Support — CleanPaste</title>
+<meta name="description" content="Help and support for CleanPaste, the Google Docs add-on that cleans up pasted text. How to use it, what it will not do, and how to report a problem.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header>
+  <div class="mark" aria-hidden="true"><i></i><i></i><i class="split-l"></i><i class="split-r"></i><b></b><i class="short"></i></div>
+  <div>
+    <h1>Support</h1>
+    <p class="tagline">CleanPaste — help, limitations, and how to report a problem</p>
+  </div>
+</header>
+
+<h2>Getting started</h2>
+<ol>
+  <li>Install CleanPaste from the Google Workspace Marketplace.</li>
+  <li>Open a Google Doc and paste the text you want to tidy.</li>
+  <li>Choose <strong>Extensions → CleanPaste → Clean document</strong>, or select some text
+      first and choose <strong>Clean selection</strong>.</li>
+</ol>
+<p>To choose which cleanups run, open <strong>Extensions → CleanPaste → Cleanup options…</strong>.
+Your choices are remembered in your own browser.</p>
+
+<h2>Undoing a clean</h2>
+<p>Press <strong>Ctrl+Z</strong> (<strong>Cmd+Z</strong> on Mac). A clean undoes in a single
+step. Google Docs also keeps a full version history under <strong>File → Version history</strong>.</p>
+
+<h2>Common questions</h2>
+
+<h3>It joined two lines that should have stayed apart</h3>
+<p>CleanPaste joins two lines only when the first is at least 30 characters, does not end on
+closing punctuation, and neither line looks like a heading or a list item. Two consecutive
+paragraphs that both end without punctuation match that pattern, because that is exactly what a
+PDF paste looks like.</p>
+<p>Press Ctrl+Z, then untick <strong>Broken line breaks</strong> in the options panel and clean
+again.</p>
+
+<h3>It did not join lines that clearly belong together</h3>
+<p>The most common reason is that the first line ends in a full stop. CleanPaste never joins
+after one: from the characters alone, a sentence that ends at the end of a line is
+indistinguishable from a paragraph that ends there, and merging two real paragraphs is a much
+worse mistake than leaving a break you can delete yourself.</p>
+<p>Short lines are also never joined — a line under 30 characters is usually short on purpose.</p>
+
+<h3>My indented code lost its indentation</h3>
+<p>Leading whitespace is removed as part of <strong>Spacing</strong>, which is right for pasted
+prose and wrong for pasted code. Press Ctrl+Z, untick Spacing, and clean again.</p>
+
+<h3>Nothing happened inside my table</h3>
+<p>Inside a table cell, only spacing and hidden characters are cleaned. Blank lines and broken
+line breaks are left alone, because a cell is narrow enough that a deliberate line break looks
+exactly like a wrapped one, and reshaping your table on that evidence is not worth the risk.</p>
+
+<h3>The menu does not appear</h3>
+<p>Reload the document. Editor add-ons attach their menu when a document opens, so a document
+that was already open when you installed CleanPaste needs a refresh.</p>
+
+<h3>Can I use it on my phone or tablet?</h3>
+<p>No. Google Docs editor add-ons run in the desktop browser only; Google does not support them
+in the Docs mobile apps. This is a platform limitation, not a CleanPaste one.</p>
+
+<h3>Does my text get uploaded anywhere?</h3>
+<p>No. CleanPaste makes no network requests at all — no server, no analytics, no AI service. It
+can only see the document it is open in. See the <a href="privacy.html">privacy policy</a>.</p>
+
+<h3>Is it really free?</h3>
+<p>Yes. No trial, no upgrade prompt, no paid tier. The source code is public.</p>
+
+<h2>Reporting a problem</h2>
+<p>The most useful report says what you pasted, what you expected, and what CleanPaste did
+instead. A small before-and-after example is worth more than a description.</p>
+<ul>
+  <li><strong>Open an issue:</strong>
+      <a href="https://github.com/maxtop9843-byte/cleanpaste/issues">github.com/maxtop9843-byte/cleanpaste/issues</a></li>
+  <li><strong>Email:</strong> <a href="mailto:maxtop9843@gmail.com">maxtop9843@gmail.com</a></li>
+</ul>
+<p>Please do not paste confidential document content into a public issue.</p>
+
+<footer>
+  <a href="index.html">Home</a>
+  <a href="privacy.html">Privacy</a>
+  <a href="terms.html">Terms</a>
+  <a href="support.html">Support</a>
+</footer>
+
+</body>
+</html>

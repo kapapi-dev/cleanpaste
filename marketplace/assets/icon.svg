@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+    <defs>
+      <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.10"/>
+        <stop offset="1" stop-color="#000000" stop-opacity="0.10"/>
+      </linearGradient>
+    </defs>
+    
+    <rect width="128" height="128" rx="28" fill="#0F7B8A"/>
+            <rect width="128" height="128" rx="28" fill="url(#sheen)"/>
+    <rect x="24" y="30" width="80" height="10" rx="5" fill="#FFFFFF"/>
+    <rect x="24" y="52" width="80" height="10" rx="5" fill="#FFFFFF"/>
+    <rect x="24" y="74" width="30" height="10" rx="5" fill="#FFFFFF"/>
+    <rect x="74" y="74" width="30" height="10" rx="5" fill="#FFFFFF"/>
+    <rect x="58" y="72" width="14" height="14" rx="4" fill="#F2A33C"/>
+    <rect x="24" y="96" width="56" height="10" rx="5" fill="#FFFFFF"/>
+  
+  </svg>

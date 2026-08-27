@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="Kl6CbJL6BW1CWxwzkLTF0IZ0xn-TaQw5YbypSIFiyAw" />
+<title>Privacy policy — CleanPaste</title>
+<meta name="description" content="CleanPaste privacy policy. CleanPaste collects nothing, transmits nothing and stores nothing. It can only see the Google Doc it is open in.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header>
+  <div class="mark" aria-hidden="true"><i></i><i></i><i class="split-l"></i><i class="split-r"></i><b></b><i class="short"></i></div>
+  <div>
+    <h1>Privacy policy</h1>
+    <p class="tagline">CleanPaste — last updated 27 August 2026</p>
+  </div>
+</header>
+
+<div class="box">
+  <p>CleanPaste does not collect, transmit, store or share anything. There is no server,
+  no database, no analytics, no account and no AI service.</p>
+</div>
+
+<h2>What CleanPaste can see</h2>
+<p>One permission governs document access:</p>
+<table>
+  <tr><th>Scope</th><th>What it grants</th></tr>
+  <tr>
+    <td><code>documents.currentonly</code></td>
+    <td>The ability to view and manage <strong>the one document the add-on is open in</strong>.
+    It does not grant access to Google Drive, to your other documents, or to any file you have
+    not opened CleanPaste in.</td>
+  </tr>
+</table>
+<p>Inside that document, CleanPaste reads the text of the paragraphs it is about to clean, and
+their formatting, so it can decide what to change and put everything else back unchanged. That
+reading happens in memory, during the few seconds a clean takes.</p>
+
+<h2>What it does with it</h2>
+<p>It works out which characters to delete, which blank lines are surplus, and which line breaks
+a paste left behind. Then it edits your document. That is the entire data flow. The text is
+never copied anywhere else, never written to storage, and never sent over a network.</p>
+
+<h2>The second permission</h2>
+<table>
+  <tr><th>Scope</th><th>What it grants</th></tr>
+  <tr>
+    <td><code>script.container.ui</code></td>
+    <td>The ability to draw the add-on's menu and options panel inside Google Docs. It does not
+    grant access to document content. An editor add-on with any interface requires it.</td>
+  </tr>
+</table>
+
+<h2>Scopes Google adds by itself</h2>
+<p>Any Google Workspace Marketplace listing automatically includes
+<code>userinfo.email</code>, <code>userinfo.profile</code> and <code>openid</code>. These are
+attached by the platform to every listed add-on and cannot be removed from the listing.</p>
+<p><strong>CleanPaste's own code never calls any identity API and never reads your email
+address, name or profile.</strong> The consent screen shows them because Google requires them
+of the listing, not because the add-on uses them.</p>
+
+<h2>No network requests</h2>
+<p>CleanPaste makes no outbound requests of any kind. It does not use <code>UrlFetchApp</code>,
+it loads no third-party scripts, and it contacts no API.</p>
+<p>The one external resource the options panel references is Google's own add-on stylesheet at
+<code>ssl.gstatic.com</code>, which Google publishes so that add-ons look native inside Docs.
+It is a stylesheet: it carries no data out, and requesting it tells Google only that a Google
+add-on panel was opened, inside Google Docs, by a user already signed in to Google.</p>
+
+<h2>Local storage</h2>
+<p>The options panel remembers which checkboxes you ticked, using your browser's own
+<code>localStorage</code>. Five true/false values, stored in your browser, on your device.
+That data never reaches CleanPaste's author, is never sent anywhere, and contains nothing about
+your documents. Clearing your browser data removes it.</p>
+
+<h2>No analytics</h2>
+<p>CleanPaste does not measure usage. There are no counters, no events, no crash reporting and
+no telemetry of any kind. Google may report aggregate installation counts to the developer
+through the Marketplace console; that is Google's reporting about the listing, and the add-on
+itself sends nothing.</p>
+
+<h2>Children</h2>
+<p>CleanPaste is a general-purpose document utility with no accounts and no data collection. It
+is not directed at children and collects nothing from anyone.</p>
+
+<h2>Changes to this policy</h2>
+<p>This policy describes the code. If the code's data handling ever changes, this page changes
+in the same commit, and the date above changes with it. The full history is public in the
+<a href="https://github.com/maxtop9843-byte/cleanpaste">source repository</a>.</p>
+
+<h2>Removing CleanPaste</h2>
+<p>Uninstall it from the Google Workspace Marketplace, or from <strong>Extensions → Add-ons →
+Manage add-ons</strong> in Google Docs. Uninstalling removes the add-on's access immediately.
+Because CleanPaste stores nothing, there is nothing left behind to delete — the only trace is
+the browser <code>localStorage</code> entry described above.</p>
+
+<h2>Contact</h2>
+<p><a href="mailto:maxtop9843@gmail.com">maxtop9843@gmail.com</a></p>
+
+<footer>
+  <a href="index.html">Home</a>
+  <a href="privacy.html">Privacy</a>
+  <a href="terms.html">Terms</a>
+  <a href="support.html">Support</a>
+</footer>
+
+</body>
+</html>
