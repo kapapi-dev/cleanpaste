@@ -11,9 +11,9 @@ submitted for review and the app is not public.**
 |---|---|
 | Apps Script project ID | `13Q2UCcV7bv9rvSZNrU0fi7IdggfsUfp5eudRls0T_0NPuDcTCnHlr-WL` |
 | Apps Script version | `1` (immutable, created for the listing) |
-| GitHub repository | [`maxtop9843-byte/cleanpaste`](https://github.com/maxtop9843-byte/cleanpaste) (public) |
-| Site repository | [`maxtop9843-byte/cleanpaste-site`](https://github.com/maxtop9843-byte/cleanpaste-site) (public) |
-| Public site | <https://maxtop9843-byte.github.io/cleanpaste-site/> |
+| GitHub repository | [`kapapi-dev/cleanpaste`](https://github.com/kapapi-dev/cleanpaste) (public) |
+| Site repository | [`kapapi-dev/kapapi-dev.github.io`](https://github.com/kapapi-dev/kapapi-dev.github.io) (public) — serves the whole KaPaPi brand site |
+| Public site | <https://kapapi.com/cleanpaste/> |
 | Developer / support email | `maxtop9843@gmail.com` |
 | Google Cloud project name | `CleanPaste` |
 | Google Cloud project ID | `cleanpaste` |
@@ -73,12 +73,12 @@ Marketplace app review. Verification typically asks for:
 `documents.currentonly` is non-sensitive and adds nothing to this burden. The
 minimal-scope choice still pays off — it just does not remove verification on its own.
 
-The domain `maxtop9843-byte.github.io` is already verified in Search Console from a
-previous project, which removes one step. The `/cleanpaste-site/` prefix should be
-verified in its own right as well: brand verification has previously rejected
-verification inherited from the domain root alone. The verification meta tag is
-already on every page, so this is a matter of adding the property in Search Console
-and clicking verify.
+`kapapi.com` is a newly purchased domain and is **not yet verified** in Search
+Console. The verification token still on the pages belongs to the previous
+`github.io` property and is worthless here; a fresh token has to be issued and
+deployed. Two properties are needed, not one: `kapapi.com` itself, and the exact
+`https://kapapi.com/cleanpaste/` prefix in its own right — brand verification has
+previously rejected verification inherited from a domain root alone.
 
 ---
 
@@ -103,10 +103,10 @@ account attached**, so nothing here can incur a charge.
 | App name | `CleanPaste` |
 | User support email / contact | `maxtop9843@gmail.com` |
 | App logo | `assets/icon-120.png`, uploaded, preview confirmed |
-| Application home page | <https://maxtop9843-byte.github.io/cleanpaste-site/> |
-| Privacy policy | <https://maxtop9843-byte.github.io/cleanpaste-site/privacy.html> |
-| Terms of service | <https://maxtop9843-byte.github.io/cleanpaste-site/terms.html> |
-| Authorised domain | `maxtop9843-byte.github.io` |
+| Application home page | <https://kapapi.com/cleanpaste/> |
+| Privacy policy | <https://kapapi.com/cleanpaste/privacy.html> |
+| Terms of service | <https://kapapi.com/cleanpaste/terms.html> |
+| Authorised domain | `kapapi.com` |
 | Audience | External, **Testing** |
 | Test user | `maxtop9843@gmail.com` (1 of 100) |
 
@@ -186,47 +186,44 @@ Needs a demo video, publishing status moved to In production, and the scope
 justification submitted. Brand verification must pass before data-access verification
 can be requested. The justification text is drafted in `LISTING.md`.
 
-### 8. Publish — **deliberately not done, and blocked on two things**
+### 8. Publish — **deliberately not done**
 
 Marketplace SDK → Store Listing → **제출하여 검토받기** is the button that makes
-CleanPaste public and starts Google's app review. It has not been pressed.
+CleanPaste public and starts Google's app review. It has not been pressed, and will
+not be without the owner's explicit go-ahead.
 
-It is waiting on two decisions that belong to the owner and are in progress:
+The two things it used to be blocked on are now resolved:
 
-1. **A developer brand.** SortDoc and CleanPaste are currently their own publishers —
-   the Marketplace "developer name" reads `SortDoc` on one listing and `CleanPaste` on
-   the other. The plan is one developer brand with both apps under it. Until that
-   brand exists, publishing would ship the wrong publisher name.
-2. **A domain.** The listings currently point at `maxtop9843-byte.github.io`, a
-   GitHub Pages path. A purchased domain is coming, and OAuth brand verification
-   checks the home page URL, so it is better to verify the real domain once than to
-   verify the github.io path and redo it.
+- **The developer brand is KaPaPi.** `kapapi.com` and `kapapi.dev` are owned, the
+  GitHub account is `kapapi-dev`, and the brand site at <https://kapapi.com/> carries
+  both products.
+- **The domain is live.** GitHub Pages serves `kapapi.com` from
+  `kapapi-dev/kapapi-dev.github.io`; DNS is at Cloudflare, DNS-only (unproxied) so
+  GitHub can issue its own certificate.
 
 ---
 
-## Waiting on: the brand and the domain
+## Remaining, in order
 
-When the brand name is decided, change **on both CleanPaste and SortDoc**:
-
-- Marketplace SDK → App Configuration → **개발자 이름** → the brand name
-  (this is the publisher name shown on the Marketplace listing)
-- Google Auth Platform → Branding → **App name** stays the product name
-  (`CleanPaste`), not the brand — it is what users see on the consent screen
-
-When the domain is bought, change:
+1. **Search Console.** Verify `kapapi.com`, then the `https://kapapi.com/cleanpaste/`
+   prefix as its own property. Needs a **new** token — the one on the pages is for the
+   dead `github.io` property.
+2. **Console URLs, both apps.** CleanPaste and SortDoc each need:
 
 | Where | Field |
 |---|---|
-| Site repo | `CNAME` file, GitHub Pages custom domain, HTTPS enforced |
-| Search Console | verify the new domain, and the exact listing prefix, in its own right |
-| Auth Platform → Branding | home page, privacy policy, terms, **authorised domain** |
-| SDK → App Configuration | 개발자 웹사이트 URL, 애플리케이션 웹사이트 URL |
+| Auth Platform → Branding | home page, privacy policy, terms, **authorised domain** → `kapapi.com` |
+| SDK → App Configuration | 개발자 이름 → `KaPaPi`; 개발자 · 애플리케이션 웹사이트 URL |
 | SDK → Store Listing | terms, privacy, support, help, report-issue URLs |
-| This repo | `README.md`, `PRIVACY.md`, `LISTING.md`, `site/*.html` links |
 
-Order matters: domain first, then Search Console verification, then brand
-verification, then the sensitive-scope submission. Brand verification has previously
-rejected verification inherited from a parent property, so verify the exact prefix.
+   Auth Platform → Branding → **App name** stays the *product* name (`CleanPaste`),
+   not the brand — it is what the consent screen shows.
+3. **Demo video**, unlisted on YouTube, showing the consent screen and the add-on
+   using the permission it asks for.
+4. **Brand verification**, then the **sensitive-scope submission**. Brand verification
+   has previously rejected verification inherited from a parent property, so step 1's
+   exact prefix matters.
+5. **제출하여 검토받기** — owner's call.
 
 ## Steps only the account owner can take
 
@@ -237,7 +234,8 @@ the person responsible for the app.
   owner's explicit instruction to handle consent checkboxes on their behalf
 - ~~Declaring **trader status** and the postal address~~ — done, set to 사업자 with
   the same address as SortDoc, on the owner's instruction
-- Choosing the **developer brand name** and buying the **domain**
+- ~~Choosing the **developer brand name** and buying the **domain**~~ — done: KaPaPi,
+  `kapapi.com` and `kapapi.dev`
 - Any identity verification Google asks for
 - Pressing **제출하여 검토받기** (Submit for review)
 

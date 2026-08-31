@@ -126,7 +126,7 @@ automatically; CleanPaste's own code never reads them. Full detail in
 ## Local setup
 
 ```bash
-git clone https://github.com/maxtop9843-byte/cleanpaste.git
+git clone https://github.com/kapapi-dev/cleanpaste.git
 ```
 
 ```bash

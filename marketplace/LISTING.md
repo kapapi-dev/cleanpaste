@@ -111,7 +111,7 @@ GOOD TO KNOW
 • Leading whitespace is removed, which is right for pasted prose and wrong for
   pasted code. Switch Spacing off, or press Ctrl+Z.
 
-The source code is public: github.com/maxtop9843-byte/cleanpaste
+The source code is public: github.com/kapapi-dev/cleanpaste
 ```
 
 ---
@@ -146,11 +146,11 @@ Open a document and choose Extensions > CleanPaste > Clean document to try it. C
 
 | Field | Value |
 |---|---|
-| Developer website | `https://maxtop9843-byte.github.io/cleanpaste-site/` |
-| Terms of service | `https://maxtop9843-byte.github.io/cleanpaste-site/terms.html` |
-| Privacy policy | `https://maxtop9843-byte.github.io/cleanpaste-site/privacy.html` |
-| Support | `https://maxtop9843-byte.github.io/cleanpaste-site/support.html` |
-| Report an issue | `https://maxtop9843-byte.github.io/cleanpaste-site/support.html` |
+| Developer website | `https://kapapi.com/cleanpaste/` |
+| Terms of service | `https://kapapi.com/cleanpaste/terms.html` |
+| Privacy policy | `https://kapapi.com/cleanpaste/privacy.html` |
+| Support | `https://kapapi.com/cleanpaste/support.html` |
+| Report an issue | `https://kapapi.com/cleanpaste/support.html` |
 
 > The report-issue field rejects `mailto:` — it must start with `http://` or `https://`,
 > so it points at the support page rather than at an address.
@@ -185,10 +185,10 @@ up or composited.
 | App name | `CleanPaste` |
 | User support email | `maxtop9843@gmail.com` |
 | App logo | `assets/icon-120.png` |
-| Application home page | `https://maxtop9843-byte.github.io/cleanpaste-site/` |
-| Privacy policy link | `https://maxtop9843-byte.github.io/cleanpaste-site/privacy.html` |
-| Terms of service link | `https://maxtop9843-byte.github.io/cleanpaste-site/terms.html` |
-| Authorised domain | `maxtop9843-byte.github.io` |
+| Application home page | `https://kapapi.com/cleanpaste/` |
+| Privacy policy link | `https://kapapi.com/cleanpaste/privacy.html` |
+| Terms of service link | `https://kapapi.com/cleanpaste/terms.html` |
+| Authorised domain | `kapapi.com` |
 
 > The consent-screen app name must match the name on the home page, and the home page
 > must state what the app does. Both were requirements that failed brand verification
@@ -222,6 +222,6 @@ party services. Document text is read and edited entirely inside the Apps Script
 runtime through documents.currentonly, which limits access to the single document the
 add-on is open in.
 
-The full source code is public at github.com/maxtop9843-byte/cleanpaste and can be
+The full source code is public at github.com/kapapi-dev/cleanpaste and can be
 checked against this description.
 ```
