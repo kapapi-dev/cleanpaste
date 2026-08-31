@@ -13,6 +13,8 @@ submitted for review and the app is not public.**
 | Apps Script version | `1` (immutable, created for the listing) |
 | GitHub repository | [`kapapi-dev/cleanpaste`](https://github.com/kapapi-dev/cleanpaste) (public) |
 | Site repository | [`kapapi-dev/kapapi-dev.github.io`](https://github.com/kapapi-dev/kapapi-dev.github.io) (public) — serves the whole KaPaPi brand site |
+| Brand site | <https://kapapi.com/> |
+| Public support address | `support@kapapi.com` (Cloudflare Email Routing → the account gmail) |
 | Public site | <https://kapapi.com/cleanpaste/> |
 | Developer / support email | `maxtop9843@gmail.com` |
 | Google Cloud project name | `CleanPaste` |
@@ -203,27 +205,52 @@ The two things it used to be blocked on are now resolved:
 
 ---
 
-## Remaining, in order
+## The domain, end to end — **done**
 
-1. **Search Console.** Verify `kapapi.com`, then the `https://kapapi.com/cleanpaste/`
-   prefix as its own property. Needs a **new** token — the one on the pages is for the
-   dead `github.io` property.
-2. **Console URLs, both apps.** CleanPaste and SortDoc each need:
-
-| Where | Field |
+| Thing | State |
 |---|---|
-| Auth Platform → Branding | home page, privacy policy, terms, **authorised domain** → `kapapi.com` |
-| SDK → App Configuration | 개발자 이름 → `KaPaPi`; 개발자 · 애플리케이션 웹사이트 URL |
-| SDK → Store Listing | terms, privacy, support, help, report-issue URLs |
+| DNS | Cloudflare, four GitHub Pages A records + `www` CNAME, all **DNS-only** (unproxied) so GitHub can issue its own certificate |
+| Certificate | issued and **HTTPS enforced**; `http://` 301s to `https://` |
+| Pages | all nine pages return 200 over HTTPS; `/nope` returns the custom 404 |
+| `kapapi.dev` | proxied, redirects to `kapapi.com` with a 301 that preserves the path |
+| `support@kapapi.com` | Cloudflare Email Routing → the account gmail; MX, SPF and DKIM records live |
+| Search Console | `kapapi.com` verified by DNS TXT; `https://kapapi.com/cleanpaste/` and `https://kapapi.com/sortdoc/` added as their own URL-prefix properties and **auto-verified** from the domain property |
 
-   Auth Platform → Branding → **App name** stays the *product* name (`CleanPaste`),
-   not the brand — it is what the consent screen shows.
-3. **Demo video**, unlisted on YouTube, showing the consent screen and the add-on
-   using the permission it asks for.
-4. **Brand verification**, then the **sensitive-scope submission**. Brand verification
-   has previously rejected verification inherited from a parent property, so step 1's
-   exact prefix matters.
-5. **제출하여 검토받기** — owner's call.
+The old `google-site-verification` HTML file belonged to the dead `github.io`
+property and has been deleted; verification now rests on the DNS record, so **do not
+remove the `google-site-verification` TXT record from the kapapi.com zone.**
+
+## Console, both apps — **done**
+
+| Where | What changed |
+|---|---|
+| Auth Platform → Branding | home page, privacy policy, terms → `https://kapapi.com/<product>/…`; **authorised domain** → `kapapi.com` |
+| SDK → App Configuration | 개발자 이름 → **`KaPaPi`**; 개발자 웹사이트 → `https://kapapi.com/`; 애플리케이션 웹사이트 → the product page |
+| SDK → Store Listing | terms, privacy, support, help and report-issue URLs |
+
+Auth Platform → Branding → **App name** deliberately stays the *product* name
+(`CleanPaste`), not the brand — it is what the consent screen shows.
+
+**개발자 이메일 stays `maxtop9843@gmail.com`.** It is the channel Google uses to
+contact the developer about app review, and routing it through a forwarder would put
+review correspondence behind a service that can break silently.
+
+> SortDoc's brand verification was **requested and passed** on the new URLs, and the
+> branding is published — its consent screen now shows a verified brand. CleanPaste
+> cannot request the same yet: while publishing status is 테스트 중, the branding page
+> reports that verification is not required, so there is nothing to request.
+
+---
+
+## Remaining
+
+1. **Demo video** — unlisted on YouTube, showing the consent screen and the add-on
+   actually using the permission it asks for. This is the real blocker: it gates the
+   sensitive-scope submission, and it should be recorded before the app leaves testing.
+2. **앱 게시** (Auth Platform → 대상) — moves CleanPaste out of 테스트 중. This *starts*
+   OAuth verification for `script.container.ui`, so it belongs after the video, not
+   before. Brand verification becomes requestable at the same moment.
+3. **제출하여 검토받기** — owner's call, and deliberately not pressed.
 
 ## Steps only the account owner can take
 
@@ -235,7 +262,7 @@ the person responsible for the app.
 - ~~Declaring **trader status** and the postal address~~ — done, set to 사업자 with
   the same address as SortDoc, on the owner's instruction
 - ~~Choosing the **developer brand name** and buying the **domain**~~ — done: KaPaPi,
-  `kapapi.com` and `kapapi.dev`
+  `kapapi.com` and `kapapi.dev`, both connected
 - Any identity verification Google asks for
 - Pressing **제출하여 검토받기** (Submit for review)
 
