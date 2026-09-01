@@ -146,11 +146,11 @@ Open a document and choose Extensions > CleanPaste > Clean document to try it. C
 
 | Field | Value |
 |---|---|
-| Developer website | `https://kapapi.com/cleanpaste/` |
-| Terms of service | `https://kapapi.com/cleanpaste/terms.html` |
-| Privacy policy | `https://kapapi.com/cleanpaste/privacy.html` |
-| Support | `https://kapapi.com/cleanpaste/support.html` |
-| Report an issue | `https://kapapi.com/cleanpaste/support.html` |
+| Developer website | `https://kapapi.dev/cleanpaste/` |
+| Terms of service | `https://kapapi.dev/cleanpaste/terms.html` |
+| Privacy policy | `https://kapapi.dev/cleanpaste/privacy.html` |
+| Support | `https://kapapi.dev/cleanpaste/support.html` |
+| Report an issue | `https://kapapi.dev/cleanpaste/support.html` |
 
 > The report-issue field rejects `mailto:` — it must start with `http://` or `https://`,
 > so it points at the support page rather than at an address.
@@ -185,10 +185,10 @@ up or composited.
 | App name | `CleanPaste` |
 | User support email | `maxtop9843@gmail.com` |
 | App logo | `assets/icon-120.png` |
-| Application home page | `https://kapapi.com/cleanpaste/` |
-| Privacy policy link | `https://kapapi.com/cleanpaste/privacy.html` |
-| Terms of service link | `https://kapapi.com/cleanpaste/terms.html` |
-| Authorised domain | `kapapi.com` |
+| Application home page | `https://kapapi.dev/cleanpaste/` |
+| Privacy policy link | `https://kapapi.dev/cleanpaste/privacy.html` |
+| Terms of service link | `https://kapapi.dev/cleanpaste/terms.html` |
+| Authorised domain | `kapapi.dev` |
 
 > The consent-screen app name must match the name on the home page, and the home page
 > must state what the app does. Both were requirements that failed brand verification

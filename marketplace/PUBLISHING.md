@@ -13,9 +13,9 @@ submitted for review and the app is not public.**
 | Apps Script version | `1` (immutable, created for the listing) |
 | GitHub repository | [`kapapi-dev/cleanpaste`](https://github.com/kapapi-dev/cleanpaste) (public) |
 | Site repository | [`kapapi-dev/kapapi-dev.github.io`](https://github.com/kapapi-dev/kapapi-dev.github.io) (public) — serves the whole KaPaPi brand site |
-| Brand site | <https://kapapi.com/> |
-| Public support address | `support@kapapi.com` (Cloudflare Email Routing → the account gmail) |
-| Public site | <https://kapapi.com/cleanpaste/> |
+| Brand site | <https://kapapi.dev/> |
+| Public support address | `support@kapapi.dev` (Cloudflare Email Routing → the account gmail) |
+| Public site | <https://kapapi.dev/cleanpaste/> |
 | Developer / support email | `maxtop9843@gmail.com` |
 | Google Cloud project name | `CleanPaste` |
 | Google Cloud project ID | `cleanpaste` |
@@ -75,12 +75,13 @@ Marketplace app review. Verification typically asks for:
 `documents.currentonly` is non-sensitive and adds nothing to this burden. The
 minimal-scope choice still pays off — it just does not remove verification on its own.
 
-`kapapi.com` is a newly purchased domain and is **not yet verified** in Search
-Console. The verification token still on the pages belongs to the previous
-`github.io` property and is worthless here; a fresh token has to be issued and
-deployed. Two properties are needed, not one: `kapapi.com` itself, and the exact
-`https://kapapi.com/cleanpaste/` prefix in its own right — brand verification has
+`kapapi.dev` is verified in Search Console as a **Domain property, by DNS TXT**, and
+the exact `https://kapapi.dev/cleanpaste/` prefix is registered as its own property
+(auto-verified from the domain). Two properties, not one: brand verification has
 previously rejected verification inherited from a domain root alone.
+
+**Do not delete the `google-site-verification` TXT record from the kapapi.dev zone** —
+it is the only thing holding all three properties up.
 
 ---
 
@@ -105,10 +106,10 @@ account attached**, so nothing here can incur a charge.
 | App name | `CleanPaste` |
 | User support email / contact | `maxtop9843@gmail.com` |
 | App logo | `assets/icon-120.png`, uploaded, preview confirmed |
-| Application home page | <https://kapapi.com/cleanpaste/> |
-| Privacy policy | <https://kapapi.com/cleanpaste/privacy.html> |
-| Terms of service | <https://kapapi.com/cleanpaste/terms.html> |
-| Authorised domain | `kapapi.com` |
+| Application home page | <https://kapapi.dev/cleanpaste/> |
+| Privacy policy | <https://kapapi.dev/cleanpaste/privacy.html> |
+| Terms of service | <https://kapapi.dev/cleanpaste/terms.html> |
+| Authorised domain | `kapapi.dev` |
 | Audience | External, **Testing** |
 | Test user | `maxtop9843@gmail.com` (1 of 100) |
 
@@ -196,10 +197,9 @@ not be without the owner's explicit go-ahead.
 
 The two things it used to be blocked on are now resolved:
 
-- **The developer brand is KaPaPi.** `kapapi.com` and `kapapi.dev` are owned, the
-  GitHub account is `kapapi-dev`, and the brand site at <https://kapapi.com/> carries
-  both products.
-- **The domain is live.** GitHub Pages serves `kapapi.com` from
+- **The developer brand is KaPaPi.** The GitHub account is `kapapi-dev`, and the
+  brand site at <https://kapapi.dev/> carries both products.
+- **The domain is live.** GitHub Pages serves `kapapi.dev` from
   `kapapi-dev/kapapi-dev.github.io`; DNS is at Cloudflare, DNS-only (unproxied) so
   GitHub can issue its own certificate.
 
@@ -207,25 +207,30 @@ The two things it used to be blocked on are now resolved:
 
 ## The domain, end to end — **done**
 
+> The apps live on **`kapapi.dev`**. `kapapi.com` was reassigned to a different
+> business on 2026-09-01, so everything moved before publication — a cheap move now,
+> an expensive one after users have the old links.
+
+
 | Thing | State |
 |---|---|
 | DNS | Cloudflare, four GitHub Pages A records + `www` CNAME, all **DNS-only** (unproxied) so GitHub can issue its own certificate |
 | Certificate | issued and **HTTPS enforced**; `http://` 301s to `https://` |
 | Pages | all nine pages return 200 over HTTPS; `/nope` returns the custom 404 |
-| `kapapi.dev` | proxied, redirects to `kapapi.com` with a 301 that preserves the path |
-| `support@kapapi.com` | Cloudflare Email Routing → the account gmail; MX, SPF and DKIM records live |
-| Search Console | `kapapi.com` verified by DNS TXT; `https://kapapi.com/cleanpaste/` and `https://kapapi.com/sortdoc/` added as their own URL-prefix properties and **auto-verified** from the domain property |
+| `kapapi.com` | **not ours any more** — kept for a different business; its GitHub Pages records were removed |
+| `support@kapapi.dev` | Cloudflare Email Routing → the account gmail; MX, SPF and DKIM records live |
+| Search Console | `kapapi.dev` verified by DNS TXT; `https://kapapi.dev/cleanpaste/` and `https://kapapi.dev/sortdoc/` added as their own URL-prefix properties and **auto-verified** from the domain property |
 
 The old `google-site-verification` HTML file belonged to the dead `github.io`
 property and has been deleted; verification now rests on the DNS record, so **do not
-remove the `google-site-verification` TXT record from the kapapi.com zone.**
+remove the `google-site-verification` TXT record from the kapapi.dev zone.**
 
 ## Console, both apps — **done**
 
 | Where | What changed |
 |---|---|
-| Auth Platform → Branding | home page, privacy policy, terms → `https://kapapi.com/<product>/…`; **authorised domain** → `kapapi.com` |
-| SDK → App Configuration | 개발자 이름 → **`KaPaPi`**; 개발자 웹사이트 → `https://kapapi.com/`; 애플리케이션 웹사이트 → the product page |
+| Auth Platform → Branding | home page, privacy policy, terms → `https://kapapi.dev/<product>/…`; **authorised domain** → `kapapi.dev` |
+| SDK → App Configuration | 개발자 이름 → **`KaPaPi`**; 개발자 웹사이트 → `https://kapapi.dev/`; 애플리케이션 웹사이트 → the product page |
 | SDK → Store Listing | terms, privacy, support, help and report-issue URLs |
 
 Auth Platform → Branding → **App name** deliberately stays the *product* name
@@ -262,7 +267,7 @@ the person responsible for the app.
 - ~~Declaring **trader status** and the postal address~~ — done, set to 사업자 with
   the same address as SortDoc, on the owner's instruction
 - ~~Choosing the **developer brand name** and buying the **domain**~~ — done: KaPaPi,
-  `kapapi.com` and `kapapi.dev`, both connected
+  `kapapi.dev` and `kapapi.dev`, both connected
 - Any identity verification Google asks for
 - Pressing **제출하여 검토받기** (Submit for review)
 
